@@ -14,7 +14,7 @@ public final class LamportClock {
 	
 	public synchronized int compareAndUpdateValue(int value) {
 		this.value = Math.max(this.value, value)+1;
-		return value;
+		return this.value;
 	}
 
 }
