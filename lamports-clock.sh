@@ -1,5 +1,9 @@
 #!/bin/bash
 
+NAMESERVER_PORT=38693
+NAMESERVER_CORBALOC=corbaloc::localhost:$NAMESERVER_PORT/NameService
+MAIN_JAR=lamports-logical-clock/target/lamport-clock.jar
+
 BASEDIR=`dirname $0`
 BASEDIR=`readlink -e $BASEDIR`
 
@@ -15,19 +19,19 @@ fi
 export PATH=$JACORB_HOME/bin:$PATH
 
 #start jacorb nameserver
-$JACORB_HOME/bin/ns -DOAPort=38693 > /dev/null &
+$JACORB_HOME/bin/ns -DOAPort=$NAMESERVER_PORT > /dev/null &
 NS_PID=$!
 
 #start jacorb nameserver manager
-$JACORB_HOME/bin/nmg -ORBInitRef "NameService=corbaloc::localhost:38693/NameService" > /dev/null &
+$JACORB_HOME/bin/nmg -ORBInitRef "NameService=$NAMESERVER_CORBALOC" > /dev/null &
 NMG_PID=$!
 
 #start event processors
-$JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor1  &
+$JACORB_HOME/bin/jaco -DORBInitRef.NameService=$NAMESERVER_CORBALOC -jar $MAIN_JAR EventProcessor1  &
 EVT_PRO1_PID=$!
-$JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor2  &
+$JACORB_HOME/bin/jaco -DORBInitRef.NameService=$NAMESERVER_CORBALOC -jar $MAIN_JAR EventProcessor2  &
 EVT_PRO2_PID=$!
-$JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor3  &
+$JACORB_HOME/bin/jaco -DORBInitRef.NameService=$NAMESERVER_CORBALOC -jar $MAIN_JAR EventProcessor3  &
 EVT_PRO3_PID=$!
 
 
@@ -51,4 +55,6 @@ pkill -P $NS_PID
 kill $NS_PID
 
 sleep 1
+echo "======================"
 echo "Stopping the demo.Bye."
+echo "======================"
