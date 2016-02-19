@@ -35,12 +35,12 @@ public class EventProcessorMain {
 			POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
 			rootpoa.the_POAManager().activate();
 
-			eventHandler = new EventHandler(this.processName, clock);
+			myEventHandler = new EventHandler(this.processName, clock);
 
 			// get object reference from the servant
-			org.omg.CORBA.Object ref = rootpoa.servant_to_reference(eventHandler);
-			IMessage href = IMessageHelper.narrow(ref);
-			eventHandlers.add(href);
+			org.omg.CORBA.Object ref = rootpoa.servant_to_reference(myEventHandler);
+			myEventHandlerORBRef = IMessageHelper.narrow(ref);
+			eventHandlers.add(myEventHandlerORBRef);
 
 			// get the root naming context
 			org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
@@ -48,7 +48,7 @@ public class EventProcessorMain {
 
 			// bind the Object Reference in Naming
 			NameComponent path[] = ncRef.to_name(processName);
-			ncRef.rebind(path, href);
+			ncRef.rebind(path, myEventHandlerORBRef);
 
 			
 		}
@@ -96,6 +96,12 @@ public class EventProcessorMain {
 			
 			// send an event to a randomly picked event Handler
 			IMessage eventHandler = nextEventHandler(random);
+			int currentClockValue = clock.incrementValue();
+			if (myEventHandlerORBRef == eventHandler) {
+				System.out.println(processName + " : " + currentClockValue + " : local" );
+			} else {
+				System.out.println(processName + " : " + currentClockValue + " : send" );
+			}
 			String otherProcessName = eventHandler.message(processName);
 			System.out.println(processName + " send message to " + otherProcessName); 
 		}
@@ -146,9 +152,10 @@ public class EventProcessorMain {
 	private final String processName;
 	private final LamportClock clock = new LamportClock();
 	private static final String NS_GROUP_ID = "org/kiranmohan/lamportclock";
-	private EventHandler eventHandler;
+	private EventHandler myEventHandler;
 	private NamingContextExt ncRef;
 	private List<IMessage> eventHandlers = new ArrayList<>();
 	private ORB orb;
+	private IMessage myEventHandlerORBRef;
 
 }
