@@ -4,8 +4,8 @@ package org.kiranmohan.lamport.clock.message;
 /**
  * Generated from IDL interface "IMessage".
  *
- * @author JacORB IDL compiler V 3.5
- * @version generated at 19 Feb, 2016 1:30:06 PM
+ * @author JacORB IDL compiler V 3.7
+ * @version generated at 19 Feb, 2016 10:19:44 PM
  */
 
 public class _IMessageStub
@@ -21,7 +21,7 @@ public class _IMessageStub
 	}
 
 	public final static java.lang.Class _opsClass = org.kiranmohan.lamport.clock.message.IMessageOperations.class;
-	public java.lang.String message(java.lang.String text)
+	public java.lang.String message(java.lang.String text, int clockValue)
 	{
 		while(true)
 		{
@@ -34,6 +34,7 @@ public class _IMessageStub
 					_os = _request( "message", true);
 					java.lang.String tmpResult0 = text;
 _os.write_string( tmpResult0 );
+					_os.write_long(clockValue);
 					_is = _invoke(_os);
 					java.lang.String _result = _is.read_string();
 					return _result;
@@ -80,7 +81,7 @@ _os.write_string( tmpResult0 );
 			java.lang.String _result;
 			try
 			{
-				_result = _localServant.message(text);
+				_result = _localServant.message(text,clockValue);
 				if ( _so instanceof org.omg.CORBA.portable.ServantObjectExt) 
 					((org.omg.CORBA.portable.ServantObjectExt)_so).normalCompletion();
 				return _result;

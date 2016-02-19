@@ -2,6 +2,6 @@ module MessageModule
 {
   interface IMessage
   {
-    string message(in string text);        // This line is an operation statement.
+    string message(in string text, in long clockValue);        // This line is an operation statement.
   };
 };

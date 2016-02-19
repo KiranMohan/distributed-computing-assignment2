@@ -4,8 +4,8 @@ package org.kiranmohan.lamport.clock.message;
 /**
  * Generated from IDL interface "IMessage".
  *
- * @author JacORB IDL compiler V 3.5
- * @version generated at 19 Feb, 2016 1:30:06 PM
+ * @author JacORB IDL compiler V 3.7
+ * @version generated at 19 Feb, 2016 10:19:44 PM
  */
 
 public abstract class IMessagePOA
@@ -44,8 +44,9 @@ public abstract class IMessagePOA
 			case 0: // message
 			{
 				java.lang.String _arg0=_input.read_string();
+				int _arg1=_input.read_long();
 				_out = handler.createReply();
-				java.lang.String tmpResult1 = message(_arg0);
+				java.lang.String tmpResult1 = message(_arg0,_arg1);
 _out.write_string( tmpResult1 );
 				break;
 			}

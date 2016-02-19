@@ -5,8 +5,8 @@ import org.omg.PortableServer.POA;
 /**
  * Generated from IDL interface "IMessage".
  *
- * @author JacORB IDL compiler V 3.5
- * @version generated at 19 Feb, 2016 1:30:06 PM
+ * @author JacORB IDL compiler V 3.7
+ * @version generated at 19 Feb, 2016 10:19:44 PM
  */
 
 public class IMessagePOATie
@@ -52,9 +52,9 @@ public class IMessagePOATie
 		}
 		return super._default_POA();
 	}
-	public java.lang.String message(java.lang.String text)
+	public java.lang.String message(java.lang.String text, int clockValue)
 	{
-		return _delegate.message(text);
+		return _delegate.message(text,clockValue);
 	}
 
 }
