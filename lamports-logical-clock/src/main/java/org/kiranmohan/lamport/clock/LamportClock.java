@@ -7,12 +7,14 @@ public final class LamportClock {
 		return value;
 	}
 	
-	public synchronized void incrementValue() {
+	public synchronized int incrementValue() {
 		++value;
+		return value;
 	}
 	
-	public synchronized void compareAndUpdateValue(int value) {
+	public synchronized int compareAndUpdateValue(int value) {
 		this.value = Math.max(this.value, value)+1;
+		return value;
 	}
 
 }
