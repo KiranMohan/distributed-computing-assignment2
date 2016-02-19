@@ -2,10 +2,10 @@
 
 **How to run**
 
-Requirements: Linux, Java 8  
-run the script lamport-clock.sh.   
-    The script will launch three event handler processors,  
-    After about 1 mins, it will shut all processes when the demo is over. 
+- Requirements: Linux, Java 8  
+- run the script lamport-clock.sh.   
+   - The script will launch three event handler processors,  
+   - After about 1 mins, it will shut all processes when the demo is over. 
 
 **Assignment Details**
 
