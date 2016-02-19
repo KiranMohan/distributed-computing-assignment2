@@ -23,16 +23,16 @@ $JACORB_HOME/bin/nmg -ORBInitRef "NameService=corbaloc::localhost:38693/NameServ
 NMG_PID=$!
 
 #start event processors
-$JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor1 > /dev/null &
+$JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor1  &
 EVT_PRO1_PID=$!
-$JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor2 > /dev/null &
+$JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor2  &
 EVT_PRO2_PID=$!
-$JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor3 > /dev/null &
+$JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor3  &
 EVT_PRO3_PID=$!
 
 
 # let processes run for sometime 
-sleep 300
+sleep 60
 
 # OK. Stop the demo.
 pkill -P $NMG_PID 
