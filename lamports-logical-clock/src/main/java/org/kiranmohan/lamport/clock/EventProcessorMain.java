@@ -94,7 +94,7 @@ public class EventProcessorMain {
 				e.printStackTrace();
 			}
 			
-			// send an event
+			// send an event to a randomly picked event Handler
 			IMessage eventHandler = nextEventHandler(random);
 			String otherProcessName = eventHandler.message(processName);
 			System.out.println(processName + " send message to " + otherProcessName); 
@@ -135,7 +135,6 @@ public class EventProcessorMain {
 				e.printStackTrace();
 			}
 		}
-		
 		
 	}
 

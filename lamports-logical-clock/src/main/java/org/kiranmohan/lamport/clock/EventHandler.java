@@ -6,7 +6,7 @@ public class EventHandler extends IMessagePOA {
 
 	public String message(String text) {
 		System.out.println(processName + " received message from " + text);
-		return "OK";
+		return this.processName;
 	}
 	
 	public EventHandler(String processName) {
