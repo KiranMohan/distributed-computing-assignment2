@@ -25,16 +25,28 @@ NMG_PID=$!
 #start event processors
 $JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor1 > /dev/null &
 EVT_PRO1_PID=$!
+$JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor2 > /dev/null &
+EVT_PRO2_PID=$!
+$JACORB_HOME/bin/jaco -DORBInitRef.NameService=corbaloc::localhost:38693/NameService -jar lamports-logical-clock/target/lamport-clock.jar EventProcessor3 > /dev/null &
+EVT_PRO3_PID=$!
 
 
 # let processes run for sometime 
-sleep 10
+sleep 300
 
 # OK. Stop the demo.
 pkill -P $NMG_PID 
 kill $NMG_PID 
+
 pkill -P $EVT_PRO1_PID 
 kill $EVT_PRO1_PID 
+
+pkill -P $EVT_PRO2_PID 
+kill $EVT_PRO2_PID 
+
+pkill -P $EVT_PRO3_PID 
+kill $EVT_PRO3_PID 
+
 pkill -P $NS_PID
 kill $NS_PID
 
