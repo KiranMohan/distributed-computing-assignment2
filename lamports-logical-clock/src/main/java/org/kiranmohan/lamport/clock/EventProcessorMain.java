@@ -126,7 +126,7 @@ public class EventProcessorMain {
 
 		// sleep some time for all event handlers to be up.
 		try {
-			TimeUnit.SECONDS.sleep(3l); // 3 sec
+			TimeUnit.SECONDS.sleep(1l); // 1 sec
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
