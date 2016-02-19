@@ -35,7 +35,7 @@ public class EventProcessorMain {
 			POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
 			rootpoa.the_POAManager().activate();
 
-			myEventHandler = new EventHandler(this.processName, clock);
+			myEventHandler = new EventHandler(this.processName, myClock);
 
 			// get object reference from the servant
 			org.omg.CORBA.Object ref = rootpoa.servant_to_reference(myEventHandler);
@@ -50,7 +50,6 @@ public class EventProcessorMain {
 			NameComponent path[] = ncRef.to_name(processName);
 			ncRef.rebind(path, myEventHandlerORBRef);
 
-			
 		}
 
 		catch (Exception e) {
@@ -87,23 +86,31 @@ public class EventProcessorMain {
 		Random random = new Random(System.currentTimeMillis());
 		while (true) {
 			try {
-				// sleep upto 500 msec
-				TimeUnit.MILLISECONDS.sleep(random.nextInt(500));
+				// sleep upto 3000 msec
+				TimeUnit.MILLISECONDS.sleep(1000l + random.nextInt(2000));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			// send an event to a randomly picked event Handler
+
+			// randomly pick an event Handler
 			IMessage eventHandler = nextEventHandler(random);
-			int currentClockValue = clock.incrementValue();
-			if (myEventHandlerORBRef == eventHandler) {
-				System.out.println(processName + " : " + currentClockValue + " : local" );
-			} else {
-				System.out.println(processName + " : " + currentClockValue + " : send" );
-			}
-			String otherProcessName = eventHandler.message(processName);
-			System.out.println(processName + " send message to " + otherProcessName); 
+
+			synchronized (myClock) {
+
+				// update clock value for the new event
+				int currentClockValue = myClock.incrementValue();
+				if (myEventHandlerORBRef == eventHandler) {
+					System.out.println(processName + " : " + currentClockValue + " : local");
+				} else {
+					System.out.println(processName + " : " + currentClockValue + " : send");
+				}
+
+				// send the event to the selected eventHandler.
+				String otherProcessName = eventHandler.message(processName, currentClockValue);
+
+				// System.out.println(processName + " send message to " + otherProcessName);
+			} // synchronized 
 		}
 
 	}
@@ -114,9 +121,9 @@ public class EventProcessorMain {
 		IMessage eventHandler = eventHandlers.get(index);
 		return eventHandler;
 	}
-	
+
 	private void findEventHandlers() {
-		
+
 		// sleep some time for all event handlers to be up.
 		try {
 			TimeUnit.SECONDS.sleep(3l); // 3 sec
@@ -124,33 +131,33 @@ public class EventProcessorMain {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		// a little hardcoding :-)
 		// TODO: remove the hardcoding
-		String []handlerNames= { "EventProcessor1","EventProcessor2", "EventProcessor3"};
-		
+		String[] handlerNames = { "EventProcessor1", "EventProcessor2", "EventProcessor3" };
+
 		for (String name : handlerNames) {
 			if (name == this.processName) {
 				continue;
 			}
 			try {
-				IMessage  eventHandler= IMessageHelper.narrow(ncRef.resolve_str(name));
+				IMessage eventHandler = IMessageHelper.narrow(ncRef.resolve_str(name));
 				eventHandlers.add(eventHandler);
 			} catch (NotFound | CannotProceed | InvalidName e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	public EventProcessorMain(String processName) {
 		super();
 		this.processName = processName;
 	}
-	
+
 	private final String processName;
-	private final LamportClock clock = new LamportClock();
+	private final LamportClock myClock = new LamportClock();
 	private static final String NS_GROUP_ID = "org/kiranmohan/lamportclock";
 	private EventHandler myEventHandler;
 	private NamingContextExt ncRef;
