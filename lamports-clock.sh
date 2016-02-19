@@ -23,8 +23,8 @@ $JACORB_HOME/bin/ns -DOAPort=$NAMESERVER_PORT > /dev/null &
 NS_PID=$!
 
 #start jacorb nameserver manager
-$JACORB_HOME/bin/nmg -ORBInitRef "NameService=$NAMESERVER_CORBALOC" > /dev/null &
-NMG_PID=$!
+#$JACORB_HOME/bin/nmg -ORBInitRef "NameService=$NAMESERVER_CORBALOC" > /dev/null &
+#NMG_PID=$!
 
 #start event processors
 $JACORB_HOME/bin/jaco -DORBInitRef.NameService=$NAMESERVER_CORBALOC -jar $MAIN_JAR EventProcessor1  &
@@ -39,8 +39,8 @@ EVT_PRO3_PID=$!
 sleep 60
 
 # OK. Stop the demo.
-pkill -P $NMG_PID 
-kill $NMG_PID 
+#pkill -P $NMG_PID 
+#kill $NMG_PID 
 
 pkill -P $EVT_PRO1_PID 
 kill $EVT_PRO1_PID 
