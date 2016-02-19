@@ -35,7 +35,7 @@ public class EventProcessorMain {
 			POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
 			rootpoa.the_POAManager().activate();
 
-			eventHandler = new EventHandler(this.processName);
+			eventHandler = new EventHandler(this.processName, clock);
 
 			// get object reference from the servant
 			org.omg.CORBA.Object ref = rootpoa.servant_to_reference(eventHandler);
@@ -144,6 +144,7 @@ public class EventProcessorMain {
 	}
 	
 	private final String processName;
+	private final LamportClock clock = new LamportClock();
 	private static final String NS_GROUP_ID = "org/kiranmohan/lamportclock";
 	private EventHandler eventHandler;
 	private NamingContextExt ncRef;

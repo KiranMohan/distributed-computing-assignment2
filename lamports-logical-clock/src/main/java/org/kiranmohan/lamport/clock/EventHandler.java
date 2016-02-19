@@ -9,11 +9,13 @@ public class EventHandler extends IMessagePOA {
 		return this.processName;
 	}
 	
-	public EventHandler(String processName) {
+	public EventHandler(String processName, LamportClock clock) {
 		super();
 		this.processName = processName;
+		this.clock = clock;
 	}
 	
 	private final String processName;
+	private final LamportClock clock;
 	
 }
