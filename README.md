@@ -18,6 +18,11 @@ Date assigned: 8.2.2016
   
 
 **Problem description**
+  
+Write a distributed application which implements Lamport‟s Logical Clocks. You have to
+write rules for updating the logical clock at each process when an event occurs. An event could
+be one of two: (1) Local event, i.e. event local to the process (2) Send/Receive events involving
+2 processes across the distributed system.  
 
 Each process maintains a logical clock in the form of an integer variable, which gets incremented by 1 each time an event occurs. You have to initialize this integer variable to 0 (zero). When a process sends a message to another, the integer variable at the sending process get incremented by 1 and this logical time is sent along with the message. At the receiving process, a comparison of the current logical clock value and the received logical clock value is carried out, and maximum of the two is considered. Then the receiving process increments this value by 1 and set the new value as its current logical clock value.
 
