@@ -1,0 +1,7 @@
+module MessageModule
+{
+  interface IMessage
+  {
+    string message(in string text);        // This line is an operation statement.
+  };
+};

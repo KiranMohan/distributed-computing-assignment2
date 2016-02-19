@@ -1,7 +1,23 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.kiranmohan</groupId>
-  <artifactId>lamports-logical-clock</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>Lamport's Logical Clock</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.kiranmohan</groupId>
+	<artifactId>lamports-logical-clock</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Lamport's Logical Clock</name>
+	<dependencies>
+		<dependency>
+			<groupId>org.jacorb</groupId>
+			<artifactId>jacorb</artifactId>
+			<version>3.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<version>1.7.13</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>lamport-clock</finalName>
+	</build>
 </project>
