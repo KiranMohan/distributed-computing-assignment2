@@ -1,4 +1,5 @@
 ## Distributed-Computing-Assignment2
+Author: Kiran Mohan E
 
 **How to run**
 
