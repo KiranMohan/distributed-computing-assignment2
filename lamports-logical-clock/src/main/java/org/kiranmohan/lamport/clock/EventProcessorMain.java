@@ -21,12 +21,26 @@ import org.omg.PortableServer.POA;
 
 public class EventProcessorMain {
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String args[]) {
+		
 		String processName = args[0];
+		
 		EventProcessorMain processor = new EventProcessorMain(processName);
 		processor.start(args);
 	}
 
+	/**
+	 * Start the Event Processor.
+	 * 
+	 * Initialize ORB and listen for events.
+	 * Find all external Event Handlers.
+	 * Start the random event generator
+	 * @param orbArgs
+	 */
 	public void start(String[] orbArgs) {
 		try {
 			orb = ORB.init(orbArgs, null);
@@ -60,13 +74,13 @@ public class EventProcessorMain {
 
 		// start event generator, event handler in their own threads
 		ExecutorService executor = Executors.newFixedThreadPool(2);
-		executor.execute(this::startEventHandler);
+		executor.execute(this::runEventHandler);
 		findEventHandlers();
-		executor.execute(this::startEventGenerator);
+		executor.execute(this::runEventGenerator);
 		executor.shutdown();
 	}
 
-	private void startEventHandler() {
+	private void runEventHandler() {
 		// start the ORB to listen for events
 		try {
 			System.out.println(processName + " is ready and waiting ...");
@@ -82,7 +96,7 @@ public class EventProcessorMain {
 		System.exit(1);
 	}
 
-	private void startEventGenerator() {
+	private void runEventGenerator() {
 		Random random = new Random(System.currentTimeMillis());
 		while (true) {
 			try {

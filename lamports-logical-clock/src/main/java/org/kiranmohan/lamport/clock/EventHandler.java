@@ -4,13 +4,18 @@ import org.kiranmohan.lamport.clock.message.IMessagePOA;
 
 public class EventHandler extends IMessagePOA {
 
+	/**
+	 * process the received message
+	 */
 	public String message(String text, int clockValue) {
+
+		// ignore local events
 		if (text == processName) {
-			// ignore local events
 			return this.processName;
 		}
-		synchronized (myClock) {
 
+		// process message received from external process
+		synchronized (myClock) {
 			int currentClockValue = myClock.compareAndUpdateValue(clockValue);
 			System.out.println(processName + " : " + currentClockValue + " : receive");
 		}
